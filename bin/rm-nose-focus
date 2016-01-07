@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+# remove `@focus` from test-unit tests
+
+Dir['test/**/*.py'].each do |file|
+  orig = File.read(file)
+  count = 0
+  changed = orig.gsub(/@focus/) { count += 1; '' }
+
+  if changed != orig
+    puts "#{file} -> #{count} change(s)"
+    File.open(file, 'w') do |handle|
+      handle.write(changed)
+    end
+  end
+end
