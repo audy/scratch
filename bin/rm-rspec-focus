@@ -2,13 +2,15 @@
 
 # remove `focus: true` from RSpec tests
 
+tag = ARGV[0] || 'focus'
+
 Dir['spec/**/*.rb'].each do |file|
   orig = File.read(file)
   count = 0
-  changed = orig.gsub(/, focus: true/) { count += 1; '' }
+  changed = orig.gsub(/, #{tag}: true/) { count += 1; '' }
 
   if changed != orig
-    puts "#{file} -> #{count} change(s)"
+    puts "#{file} [#{tag}] -> #{count} change(s)"
     File.open(file, 'w') do |handle|
       handle.write(changed)
     end
