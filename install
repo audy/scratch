@@ -3,5 +3,5 @@
 set -euo pipefail
 
 for i in bin/*; do
-  ln -sv $PWD/${i} /usr/local/bin
+  ln -sv $PWD/${i} /usr/local/bin || true
 done
