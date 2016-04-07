@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+# cleanup my desktop
+
+DESKTOP = File.expand_path('~/Desktop')
+
+# directories
+file_types = {
+  /.*\.(pl|py|sh|rb)$/ => 'scripts',
+  /.*\.(jpe?g|png|gif|bmp)/ => 'images',
+  /.*\.(csv|fasta|fa|gbk|gbf|gff|aln|xlsx)/ => 'data',
+  /.*\.(md|txt|docx?|rtf)/ => 'textfiles'
+}
+
+files = Dir.entries(DESKTOP)
+
+files.each do |file|
+  file_types.each_pair do |re, directory|
+    if file =~ re
+      destination = File.join(directory, file)
+      puts "-> #{file} #{destination}"
+      File.rename file, destination
+      break
+    end
+  end
+  puts "?? #{file}"
+end
