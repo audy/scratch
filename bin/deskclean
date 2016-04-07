@@ -7,21 +7,30 @@ DESKTOP = File.expand_path('~/Desktop')
 # directories
 file_types = {
   /.*\.(pl|py|sh|rb)$/ => 'scripts',
-  /.*\.(jpe?g|png|gif|bmp)/ => 'images',
-  /.*\.(csv|fasta|fa|gbk|gbf|gff|aln|xlsx)/ => 'data',
-  /.*\.(md|txt|docx?|rtf)/ => 'textfiles'
+  /.*\.(jpe?g|png|gif|bmp)$/ => 'images',
+  /.*\.(csv|fasta|fa|fna|faa|gbk|gbf|gff|aln|xlsx?)$/ => 'data',
+  /.*\.(md|txt|docx?|rtf)$/ => 'textfiles'
 }
 
-files = Dir.entries(DESKTOP)
+here = Pathname.new(__FILE__)
 
-files.each do |file|
-  file_types.each_pair do |re, directory|
-    if file =~ re
-      destination = File.join(directory, file)
-      puts "-> #{file} #{destination}"
-      File.rename file, destination
-      break
-    end
+filenames = Dir.entries(DESKTOP)
+
+filenames.each do |filename|
+  destinations =
+    file_types.
+    each_pair.
+    to_a.
+    keep_if { |re, d| filename =~ re }
+
+  if destinations.size == 1
+    destination =
+      File.join(File.expand_path(destinations.first.last, DESKTOP), filename)
+    source =
+      File.expand_path(filename, DESKTOP)
+    puts "-> #{source} #{destination}"
+    File.rename source, destination
+  elsif destinations.size > 1
+    puts "?? #{source} [ambiguous]"
   end
-  puts "?? #{file}"
 end
