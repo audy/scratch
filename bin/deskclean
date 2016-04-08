@@ -12,8 +12,6 @@ file_types = {
   /.*\.(md|txt|docx?|rtf)$/ => 'textfiles'
 }
 
-here = Pathname.new(__FILE__)
-
 filenames = Dir.entries(DESKTOP)
 
 filenames.each do |filename|
