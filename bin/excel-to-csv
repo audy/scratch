@@ -7,4 +7,8 @@ rescue LoadError
   exit -1
 end
 
-puts Roo::Spreadsheet.open(ARGV[0]).to_csv
+sheet = Roo::Spreadsheet.open(ARGV[0])
+
+$stderr.puts sheet.info
+
+print sheet.to_csv
