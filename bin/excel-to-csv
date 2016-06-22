@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+begin
+  require 'roo'
+rescue LoadError
+  $stderr.puts "please install roo with `gem install roo`"
+  exit -1
+end
+
+puts Roo::Spreadsheet.open(ARGV[0]).to_csv
