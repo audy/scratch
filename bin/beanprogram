@@ -1,0 +1,68 @@
+#!/usr/bin/env ruby
+#
+require 'curses'
+include Curses
+
+
+class BeanProgram
+  def initialize
+    print 'what is your name? '
+    @name = gets.strip
+    puts "hello, #{name}"
+    gogogoglhf
+  end
+
+  def gogogoglhf
+    setup
+    loop do
+      setpos(y, x)
+      attron(color_pair(colors.sample)) {
+        addstr(name)
+      }
+      refresh
+
+      sleep 0.001
+    end
+  end
+
+  def x
+    rand(cols - 4) + 2
+  end
+
+  def y
+    rand(lines - 4) + 2
+  end
+
+  def setup
+    init_screen
+    nl
+    noecho
+    start_color
+    srand
+    curs_set(0) # hide cursor
+
+    colors .each do |color|
+     init_pair(color, color, COLOR_BLACK)
+    end
+  end
+
+  def colors
+    [COLOR_GREEN, COLOR_YELLOW, COLOR_BLACK, COLOR_WHITE]
+  end
+
+  def voices
+    @voices ||= `say -v ?`.split("\n").map(&:split).map(&:first)
+  end
+
+  def hello arg
+    "hello #{arg}"
+  end
+
+  def name
+    `say --voice #{voices.sample} #{@name}`
+    @name
+  end
+end
+
+
+BeanProgram.new
