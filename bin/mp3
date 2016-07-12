@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+# simple CLI tool to bookmark streams I listen to
+
+STREAMS = {
+  npr: 'http://streams.kqed.org/kqedradio',
+  wvum: 'http://www.wvum.org:9010/stream/'
+}
+
+url = STREAMS[ARGV[0].to_sym]
+
+system 'mplayer', url, out: $stdout, err: :out
