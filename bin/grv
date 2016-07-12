@@ -1,0 +1,54 @@
+#!/usr/bin/env ruby
+
+# started with http://ruby-doc.org/stdlib-2.0.0/libdoc/curses/rdoc/Curses.html
+# and ended up with this
+#
+# 2016 Austin G. Davis-Richardson <harekrishna@gmail.com>
+
+require 'curses'
+include Curses
+
+init_screen
+nl
+noecho
+start_color
+srand
+curs_set(0) # hide cursor
+
+# colors of the leaves
+COLORS = [COLOR_GREEN, COLOR_YELLOW, COLOR_BLACK, COLOR_WHITE]
+COLORS.each do |color|
+ init_pair(color, color, COLOR_BLACK)
+end
+
+# generate a random ecosystem
+LEAVES = \
+  (['*'] * rand(5)) + \
+  ([' '] * rand(20)) + \
+  (['.'] * rand(5))
+
+def color
+  [
+    COLOR_YELLOW,
+    COLOR_GREEN,
+    COLOR_WHITE,
+    COLOR_BLACK,
+    COLOR_BLACK,
+  ].sample
+end
+
+def char
+  LEAVES.sample
+end
+
+loop do
+  x = rand(cols - 4) + 2
+  y = rand(lines - 4) + 2
+  setpos(y, x)
+  attron(color_pair(color)) {
+    addstr(char)
+  }
+  refresh
+
+  sleep 0.001
+end
