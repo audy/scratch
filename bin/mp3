@@ -8,6 +8,13 @@ STREAMS = {
   reboot: 'http://87.118.122.220:8002/stream'
 }
 
-url = STREAMS[ARGV[0].to_sym]
-
-system 'mplayer', url, out: $stdout, err: :out
+if ARGV.size == 1
+  url = STREAMS[ARGV[0].to_sym]
+  system 'mplayer', url, out: $stdout, err: :out
+else
+  $stderr.puts 'usage: mp3 (stream)'
+  $stderr.puts 'available streams: '
+  STREAMS.keys.each do |stream|
+    $stderr.puts "- #{stream}"
+  end
+end
