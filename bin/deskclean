@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'fileutils'
+
 # cleanup my desktop
 
 DESKTOP = File.expand_path('~/Desktop')
@@ -12,6 +14,10 @@ file_types = {
   /.*\.(md|txt|docx?|rtf|pdf)$/i => 'textfiles',
   /.*\.(mp3)$/i => 'music'
 }
+
+file_types.values.each do |directory_name|
+  FileUtils.mkdir_p(File.join(DESKTOP, directory_name))
+end
 
 filenames = Dir.entries(DESKTOP)
 
