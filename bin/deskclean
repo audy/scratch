@@ -7,7 +7,7 @@ DESKTOP = File.expand_path('~/Desktop')
 # directories
 file_types = {
   /.*\.(pl|py|sh|rb|js|ts|coffee|c)$/i => 'scripts',
-  /.*\.(jpe?g|png|gif|bmp)$/i => 'images',
+  /.*\.(svg|jpe?g|png|gif|bmp)$/i => 'images',
   /.*\.(csv|fasta|fa|fna|faa|gbk|gbf|gff|aln|xlsx?)$/i => 'data',
   /.*\.(md|txt|docx?|rtf|pdf)$/i => 'textfiles',
   /.*\.(mp3)$/i => 'music'
