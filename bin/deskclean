@@ -33,7 +33,7 @@ filenames.each do |filename|
       File.join(File.expand_path(destinations.first.last, DESKTOP), filename)
     source =
       File.expand_path(filename, DESKTOP)
-    puts "-> #{source} #{destination}"
+    puts "-> #{destination}"
     File.rename source, destination
   elsif destinations.size > 1
     puts "?? #{source} [ambiguous]"
