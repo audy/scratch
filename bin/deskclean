@@ -34,7 +34,13 @@ filenames.each do |filename|
     source =
       File.expand_path(filename, DESKTOP)
     puts "-> #{destination}"
-    File.rename source, destination
+
+    if File.exists? destination
+      puts "x #{destination} already exists"
+    else
+      puts "-> #{source} #{destination}"
+      File.rename source, destination
+    end
   elsif destinations.size > 1
     puts "?? #{source} [ambiguous]"
   end
