@@ -3,11 +3,12 @@
 require 'fileutils'
 require 'optparse'
 
-@options = Hash.new
+@options = { path: '~/Desktop' }
+
 OptionParser.new do |opts|
   opts.banner = "usage: #{$@} [options]"
   opts.on('-f', '--force', 'overwrite existing files') { @options[:force] = true }
-  opts.on('-path', '--path', 'path to desktop [default=~/Desktop]') { |path| @options[:path] = path }
+  opts.on('-p', '--path', 'path to desktop [default=~/Desktop]') { |path| @options[:path] = path }
 end.parse!
 
 @options.freeze
