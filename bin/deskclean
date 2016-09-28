@@ -1,5 +1,30 @@
 #!/usr/bin/env ruby
 
+#
+# # DeskClean
+#
+# Cleanup files on your desktop by moving them to directories depending on
+# file extension (e.g., *.jpg goes to images/).
+#
+#
+# ## Usage:
+#
+#     deskclean
+#
+# Force overwriting existing files:
+#
+#     deskclean -f
+#
+# Cleanup a different directory:
+#
+#     deskclean -p ~/Downloads
+#
+#
+# ## Installation:
+#
+#     chmod +x deskclean && mv deskclean /usr/local/bin
+#
+
 require 'fileutils'
 require 'optparse'
 
