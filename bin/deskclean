@@ -1,6 +1,15 @@
 #!/usr/bin/env ruby
 
 require 'fileutils'
+require 'optparse'
+
+@options = Hash.new
+OptionParser.new do |opts|
+  opts.banner = "usage: #{$@} [options]"
+  opts.on('-f', '--force', 'overwrite existing files') { @options[:force] = true }
+end.parse!
+
+@options.freeze
 
 # cleanup my desktop
 
@@ -34,7 +43,7 @@ filenames.each do |filename|
     source =
       File.expand_path(filename, DESKTOP)
 
-    if File.exists? destination
+    if File.exists? destination and not @options[:force]
       puts "x #{destination} already exists"
     else
       puts "-> #{destination}"
