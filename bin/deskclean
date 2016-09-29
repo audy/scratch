@@ -31,7 +31,7 @@ require 'optparse'
 @options = { path: '~/Desktop' }
 
 OptionParser.new do |opts|
-  opts.banner = "usage: #{$@} [options]"
+  opts.banner = "usage: #{File.basename($0)} [options]"
   opts.on('-f', '--force', 'overwrite existing files') { @options[:force] = true }
   opts.on('-p', '--path', 'path to desktop [default=~/Desktop]') { |path| @options[:path] = path }
 end.parse!
