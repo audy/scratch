@@ -46,8 +46,8 @@ DESKTOP = File.expand_path(@options[:path])
 file_types = {
   /.*\.(sql|pl|py|sh|rb|js|ts|coffee|c)$/i => 'scripts',
   /.*\.(svg|jpe?g|png|gif|bmp)$/i => 'images',
-  /.*\.(csv|sam|fasta|fa|fna|faa|gbk|gbf|gff|aln|xlsx?)$/i => 'data',
-  /.*\.(md|txt|docx?|rtf|pdf)$/i => 'textfiles',
+  /.*\.(ab1|csv|sam|fasta|fastq|fa|fna|faa|gbk?|gbf|gff|aln|xlsx?)(\.gz)?$/i => 'data',
+  /.*\.(md|txt|docx?|rtf|html|pdf)$/i => 'textfiles',
   /.*\.(mp3)$/i => 'music'
 }
 
