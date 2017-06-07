@@ -23,8 +23,8 @@ end
 
 # generate a random ecosystem
 LEAVES = \
-  (['*'] * rand(5)) + \
-  ([' '] * rand(20)) + \
+  (['*'] * rand(5)) +
+  ([' '] * rand(20)) +
   (['.'] * rand(5))
 
 def color
@@ -41,6 +41,16 @@ def char
   LEAVES.sample
 end
 
+def delay
+  [
+    1,
+    0.1,
+    0.01,
+    0.001,
+    0.0001,
+  ].sample
+end
+
 loop do
   x = rand(cols - 4) + 2
   y = rand(lines - 4) + 2
@@ -50,5 +60,5 @@ loop do
   }
   refresh
 
-  sleep 0.001
+  sleep delay
 end
