@@ -1,3 +1,7 @@
 #!/usr/bin/env ruby
 
-puts File.readlines('/usr/share/dict/words').map(&:strip).sample(4).join(' ')
+puts File
+  .readlines('/usr/share/dict/words')
+  .map(&:strip)
+  .sample(3)
+  .join(' ')
