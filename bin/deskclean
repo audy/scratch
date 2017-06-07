@@ -45,12 +45,11 @@ DESKTOP = File.expand_path(@options[:path])
 # directories
 file_types = {
   /.*\.(ab1|csv|sam|fasta|fastq|fa|fna|faa|gbk?|gbf|gff|aln|xlsx?)(\.gz)?$/i => 'data',
-  /.*\.(csv|sam|fasta|fa|fna|faa|gbk|gbf|gff|aln|xlsx?)$/i => 'data',
-  /.*\.(md|txt|docx?|rtf|html|pdf)$/i => 'textfiles',
-  /.*\.(md|txt|docx?|rtf|pdf)$/i => 'textfiles',
+  /.*\.(csv|sam|fasta|fa|fna|xml|faa|gbk|gbf|gff|aln|xlsx?)$/i => 'data',
+  /.*\.(md|txt|docx?|rtf|html?|pdf)$/i => 'textfiles',
   /.*\.(mp3)$/i => 'music',
-  /.*\.(sql|pl|py|sh|rb|js|ts|coffee|c)$/i => 'scripts',
-  /.*\.(svg|jpe?g|png|gif|bmp|mp4)$/i => 'images'
+  /.*\.(rmd|sql|pl|py|sh|rb|js|ts|coffee|c)$/i => 'scripts',
+  /.*\.(svg|jpe?g|png|gif|bmp|mp4|ai)$/i => 'images'
 }
 
 file_types.values.each do |directory_name|
