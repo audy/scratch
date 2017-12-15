@@ -33,6 +33,7 @@ require 'optparse'
 OptionParser.new do |opts|
   opts.banner = "usage: #{File.basename($0)} [options]"
   opts.on('-f', '--force', 'overwrite existing files') { @options[:force] = true }
+  opts.on('-t', '--timestamp', 'prepend date to destination') { @options[:timestamp] = true }
   opts.on('-p', '--path path', 'path to desktop [default=~/Desktop]') { |path| @options[:path] = path }
 end.parse!
 
@@ -57,6 +58,8 @@ end
 
 filenames = Dir.entries(DESKTOP)
 
+TIMESTAMP = Time.now.to_i
+
 filenames.each do |filename|
   destinations =
     file_types.
@@ -65,8 +68,19 @@ filenames.each do |filename|
     keep_if { |re, d| filename =~ re }
 
   if destinations.size == 1
+    
+    destination_filename =
+      if @options[:timestamp]
+        "#{TIMESTAMP}-#{filename}" 
+      else
+        filename
+      end
+
     destination =
-      File.join(File.expand_path(destinations.first.last, DESKTOP), filename)
+      begin
+        dest = File.join(File.expand_path(destinations.first.last, DESKTOP), destination_filename)
+      end
+
     source =
       File.expand_path(filename, DESKTOP)
 
