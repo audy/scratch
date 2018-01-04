@@ -28,12 +28,12 @@
 require 'fileutils'
 require 'optparse'
 
-@options = { path: '~/Desktop' }
+@options = { path: '~/Desktop', timestamp: true, force: false }
 
 OptionParser.new do |opts|
   opts.banner = "usage: #{File.basename($0)} [options]"
+  opts.on('-t', '--dont-timestamp', 'dont prepend date to destination') { @options[:timestamp] = false }
   opts.on('-f', '--force', 'overwrite existing files') { @options[:force] = true }
-  opts.on('-t', '--timestamp', 'prepend date to destination') { @options[:timestamp] = true }
   opts.on('-p', '--path path', 'path to desktop [default=~/Desktop]') { |path| @options[:path] = path }
 end.parse!
 
