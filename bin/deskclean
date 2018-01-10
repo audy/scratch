@@ -86,10 +86,10 @@ filenames.each do |filename|
     keep_if { |re, d| filename =~ re }
 
   if destinations.size == 1
-    
+
     destination_filename =
       if @options[:timestamp]
-        "#{TIMESTAMP}-#{filename}" 
+        "#{TIMESTAMP}-#{filename}"
       else
         filename
       end
