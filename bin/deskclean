@@ -44,24 +44,41 @@ end.parse!
 
 DESKTOP = File.expand_path(@options[:path])
 
+# will return true if filename is a directory
+# but we don't want to match directories if they're in filetypes.values
+class DirectoryMatcher
+  def initialize kwargs = {}
+    @skip = (kwargs[:skip] || []) + ['directories']
+  end
+
+  def =~ filename
+    File.directory?(File.expand_path(File.join(DESKTOP, filename))) && !@skip.include?(filename.to_s)
+  end
+end
+
 # directories
 file_types = {
   /.*\.(ab1|csv|sam|fasta|fastq|fa|fna|faa|gbk?|gbf|gff|aln|zip|tar\.gz|xlsx|sqlite|json?)(\.gz)?$/i => 'data',
   /.*\.(rtf|rtfd|md|txt|docx?|rtf|html?|pdf)$/i => 'textfiles',
   /.*\.(mp3)$/i => 'music',
-  /.*\.(rmd|sql|pl|py|sh|rb|js|ts|coffee|c)$/i => 'scripts',
-  /.*\.(svg|jpe?g|png|gif|bmp|mp4|ai)$/i => 'images'
+  /.*\.(rmd|sql|pl|py|sh|rb|js|ts|coffee|c|r|ipynb)$/i => 'scripts',
+  /.*\.(svg|jpe?g|png|gif|bmp|mp4|ai)$/i => 'images',
 }
+
+
+# match directories except for the ones in file_types.values
+file_types[DirectoryMatcher.new(skip: file_types.values)] = 'directories'
 
 file_types.values.each do |directory_name|
   FileUtils.mkdir_p(File.join(DESKTOP, directory_name))
 end
 
-filenames = Dir.entries(DESKTOP)
+filenames = Dir.entries(DESKTOP).reject { |fn| %w{. ..}.include? fn }
 
 TIMESTAMP = Time.now.to_i
 
 filenames.each do |filename|
+
   destinations =
     file_types.
     each_pair.
