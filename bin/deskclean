@@ -28,13 +28,14 @@
 require 'fileutils'
 require 'optparse'
 
-@options = { path: '~/Desktop', timestamp: true, force: false }
+@options = { path: '~/Desktop', timestamp: true, force: false, dry_run: false }
 
 OptionParser.new do |opts|
   opts.banner = "usage: #{File.basename($0)} [options]"
   opts.on('-t', '--dont-timestamp', 'dont prepend date to destination') { @options[:timestamp] = false }
   opts.on('-f', '--force', 'overwrite existing files') { @options[:force] = true }
   opts.on('-p', '--path path', 'path to desktop [default=~/Desktop]') { |path| @options[:path] = path }
+  opts.on('-d', '--dry-run', 'dont actually move anything') { @options[:dry_run] = true }
 end.parse!
 
 @options.freeze
@@ -88,7 +89,7 @@ filenames.each do |filename|
       puts "x #{destination} already exists"
     else
       puts "-> #{destination}"
-      File.rename source, destination
+      File.rename(source, destination) unless @options[:dry_run]
     end
   elsif destinations.size > 1
     puts "?? #{filename} #{destinations.map(&:last)} [ambiguous]"
