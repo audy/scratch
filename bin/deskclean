@@ -47,12 +47,8 @@ DESKTOP = File.expand_path(@options[:path])
 # will return true if filename is a directory
 # but we don't want to match directories if they're in filetypes.values
 class DirectoryMatcher
-  def initialize kwargs = {}
-    @skip = (kwargs[:skip] || []) + ['directories']
-  end
-
   def =~ filename
-    File.directory?(File.expand_path(File.join(DESKTOP, filename))) && !@skip.include?(filename.to_s)
+    File.directory?(File.expand_path(File.join(DESKTOP, filename)))
   end
 end
 
@@ -63,11 +59,9 @@ file_types = {
   /.*\.(mp3)$/i => 'music',
   /.*\.(rmd|sql|pl|py|sh|rb|js|ts|coffee|c|r|ipynb)$/i => 'scripts',
   /.*\.(svg|jpe?g|png|gif|bmp|mp4|ai)$/i => 'images',
+  DirectoryMatcher.new => 'directories'
 }
 
-
-# match directories except for the ones in file_types.values
-file_types[DirectoryMatcher.new(skip: file_types.values)] = 'directories'
 
 file_types.values.each do |directory_name|
   FileUtils.mkdir_p(File.join(DESKTOP, directory_name))
@@ -102,7 +96,11 @@ filenames.each do |filename|
     source =
       File.expand_path(filename, DESKTOP)
 
-    if File.exists? destination and not @options[:force]
+    if file_types.values.include? filename
+      # don't move destinations into destinations
+      puts "x #{filename} is a destination"
+      next
+    elsif File.exists? destination and not @options[:force]
       puts "x #{destination} already exists"
     else
       puts "-> #{destination}"
