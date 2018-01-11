@@ -67,7 +67,11 @@ file_types.values.each do |directory_name|
   FileUtils.mkdir_p(File.join(DESKTOP, directory_name))
 end
 
-filenames = Dir.entries(DESKTOP).reject { |fn| %w{. ..}.include? fn }
+filenames =
+  Dir.
+  entries(DESKTOP).
+  reject { |fn| %w{. ..}.include? fn }.
+  rejecct { |fn| file_types.values.include? fn }
 
 TIMESTAMP = Time.now.to_i
 
@@ -96,11 +100,7 @@ filenames.each do |filename|
     source =
       File.expand_path(filename, DESKTOP)
 
-    if file_types.values.include? filename
-      # don't move destinations into destinations
-      puts "x #{filename} is a destination"
-      next
-    elsif File.exists? destination and not @options[:force]
+    if File.exists? destination and not @options[:force]
       puts "x #{destination} already exists"
     else
       puts "-> #{destination}"
