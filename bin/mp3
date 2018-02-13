@@ -6,7 +6,6 @@ STREAMS = {
   fluxfm: 'http://streams.fluxfm.de/live/mp3-128/fluxfm.de_webplayer/',
   kpoo: 'http://amber.streamguys.com:5220/xstream',
   kqed: 'http://streams2.kqed.org/kqedradio',
-  npr: 'http://streams.kqed.org/kqedradio',
   plants: 'http://69.253.126.229:8000/listen',
   reboot: 'http://87.118.122.220:8002/stream',
   wvum: 'http://www.wvum.org:9010/stream/',
