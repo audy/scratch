@@ -70,7 +70,7 @@ filenames =
   Dir.
   entries(DESKTOP).
   reject { |fn| %w{. ..}.include? fn }.
-  rejecct { |fn| file_types.values.include? fn }
+  reject { |fn| file_types.values.include? fn }
 
 TIMESTAMP = Time.now.to_i
 
