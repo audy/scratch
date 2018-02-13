@@ -7,7 +7,8 @@ STREAMS = {
   wvum: 'http://www.wvum.org:9010/stream/',
   reboot: 'http://87.118.122.220:8002/stream',
   plants: 'http://69.253.126.229:8000/listen',
-  fluxfm: 'http://streams.fluxfm.de/live/mp3-128/fluxfm.de_webplayer/'
+  fluxfm: 'http://streams.fluxfm.de/live/mp3-128/fluxfm.de_webplayer/',
+  kpoo: 'http://amber.streamguys.com:5220/xstream'
 }
 
 if ARGV.size == 1
