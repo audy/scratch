@@ -54,9 +54,8 @@ end
 
 # directories
 file_types = {
-  /.*\.(ab1|csv|sam|fasta|fastq|fa|fna|faa|gbk?|gbf|gff|aln|zip|tar\.gz|xlsx|sqlite|json?)(\.gz)?$/i => 'data',
+  /.*\.(ab1|csv|sam|fasta|fastq|fa|fna|faa|gbk?|gbf|gff|aln|zip|tar\.gz|xlsx?|sqlite|json?)(\.gz)?$/i => 'data',
   /.*\.(rtf|rtfd|md|txt|docx?|rtf|html?|pdf)$/i => 'textfiles',
-  /.*\.(mp3)$/i => 'music',
   /.*\.(rmd|sql|pl|py|sh|rb|js|ts|coffee|c|r|ipynb)$/i => 'scripts',
   /.*\.(svg|jpe?g|png|gif|bmp|mp4|ai)$/i => 'images',
   DirectoryMatcher.new => 'directories'
