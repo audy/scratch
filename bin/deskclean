@@ -27,6 +27,7 @@
 
 require 'fileutils'
 require 'optparse'
+require 'date'
 
 @options = { path: '~/Desktop', timestamp: true, force: false, dry_run: false }
 
@@ -36,6 +37,7 @@ OptionParser.new do |opts|
   opts.on('-f', '--force', 'overwrite existing files') { @options[:force] = true }
   opts.on('-p', '--path path', 'path to desktop [default=~/Desktop]') { |path| @options[:path] = path }
   opts.on('-d', '--dry-run', 'dont actually move anything') { @options[:dry_run] = true }
+  opts.on('-o', '--older-than datetime', 'only move files older than {}') { |datetime| @options[:older_than] = Date.parse(datetime) }
 end.parse!
 
 @options.freeze
@@ -70,7 +72,8 @@ filenames =
   Dir.
   entries(DESKTOP).
   reject { |fn| %w{. ..}.include? fn }.
-  reject { |fn| file_types.values.include? fn }
+  reject { |fn| file_types.values.include? fn }.
+  reject { |fn| @options[:older_than] ? !(File.stat(File.expand_path(fn, DESKTOP)).mtime.to_date < @options[:older_than]) : false }
 
 TIMESTAMP = Time.now.to_i
 
