@@ -58,7 +58,7 @@ file_types = {
   /.*\.(rtf|rtfd|md|txt|docx?|rtf|html?|pdf)$/i => 'textfiles',
   /.*\.(mp3)$/i => 'music',
   /.*\.(rmd|sql|pl|py|sh|rb|js|ts|coffee|c|r|ipynb)$/i => 'scripts',
-  /.*\.(svg|jpe?g|png|gif|bmp|mp4|ai)$/i => 'images',
+  /.*\.(svg|jpe?g|png|gif|gifv|bmp|mp4|mov|m4v|ai)$/i => 'images',
   DirectoryMatcher.new => 'directories'
 }
 
