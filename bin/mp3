@@ -11,13 +11,23 @@ STREAMS = {
   wvum: 'http://www.wvum.org:9010/stream/',
 }
 
-if ARGV.size == 1
-  url = STREAMS[ARGV[0].to_sym]
-  system 'mplayer', url, out: $stdout, err: :out
-else
+def list_streams
   $stderr.puts 'usage: mp3 (stream)'
   $stderr.puts 'available streams: '
   STREAMS.keys.each do |stream|
     $stderr.puts "- #{stream}"
   end
+end
+
+if ARGV.size == 1
+  stream_name = ARGV[0].to_sym
+  if url = STREAMS[stream_name]
+    system 'mplayer', url, out: $stdout, err: :out
+  else
+    $stderr.puts "No stream by the name of #{stream_name}"
+    list_streams
+    exit -1
+  end
+else
+  list_streams
 end
