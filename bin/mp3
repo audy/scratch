@@ -23,6 +23,7 @@ if ARGV.size == 1
   stream_name = ARGV[0].to_sym
   if url = STREAMS[stream_name]
     system 'mplayer', url, out: $stdout, err: :out
+    $stderr.puts "Something went wrong. Do you have mplayer?" unless $?.to_i == 0
   else
     $stderr.puts "No stream by the name of #{stream_name}"
     list_streams
