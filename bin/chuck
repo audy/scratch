@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+
+import argparse
+import datetime
+import getpass
+import os
+import pathlib
+import socket
+import sys
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="toss a file into the junk pile with some information about how it got there"
+    )
+
+    parser.add_argument("-n", "--note", default=None, help="would you like to add a note?")
+    parser.add_argument(
+        "-d",
+        "--junk-directory",
+        default=pathlib.Path().home().joinpath("Code").joinpath("junk-pile"),
+        type=pathlib.Path,
+    )
+    parser.add_argument("files", nargs="+")
+
+    return parser.parse_args()
+
+
+def main():
+
+    args = parse_args()
+
+    for file in args.files:
+        with open(file) as handle:
+            lines = [l.rstrip("\n") for l in handle.readlines()]
+
+        message = [
+            "",
+            "#",
+            f"# this file was chucked from {os.getcwd()}",
+            f"# at {datetime.datetime.now()}",
+            f"# on host {socket.gethostname()}",
+            f"# by {getpass.getuser()}",
+        ]
+
+        if args.note:
+            message.append(f'# with note: "{note}"')
+
+        message.extend(["#", ""])
+
+        for line in message[::-1]:
+            lines.insert(2, line)
+
+        destination_path = args.junk_directory.joinpath(
+            f"{datetime.date.today()}-{os.path.basename(file)}"
+        )
+
+        print(f"tossing {file} into {destination_path}")
+
+        with open(destination_path, "w") as handle:
+            for line in lines:
+                handle.write(line)
+                handle.write("\n")
+
+
+if __name__ == "__main__":
+    main()
